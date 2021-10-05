@@ -8,8 +8,12 @@ namespace EvonitTest.Classok
 {
     class Objects
     {
-        public string id { get; init; }
+        public string Id { get; init; }
         public string Nev { get; set; }
-        public string Tipus { get; set; }
+        public Objects(string id, string nev)
+        {
+            Id = id;
+            Nev = nev;
+        }
     }
 }

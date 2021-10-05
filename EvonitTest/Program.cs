@@ -14,10 +14,14 @@ namespace EvonitTest
         public static int oCount = 0;
         public static XmlDocument doc;
 
+
+        public static List<Objects> objList = new List<Objects>();
+        public static List<Relations> relList = new List<Relations>();
+
         static void Main(string[] args)
         {
             ReadXML();
-            CreateAdjecencyMatrix();
+            //CreateAdjecencyMatrix();
             GetPath();
             Console.ReadKey();
         }
@@ -29,6 +33,28 @@ namespace EvonitTest
                 string xmlpath = File.ReadAllText("test2.xml");
                 doc = new XmlDocument();
                 doc.LoadXml(xmlpath);
+
+                //Fill up object lists
+                XmlNodeList objectlist = doc.GetElementsByTagName("parcel");
+                XmlNodeList relationList = doc.GetElementsByTagName("illeszkedik");
+                for (int i = 0; i < objectlist.Count; i++)
+                {
+                    Objects objs = new Objects(
+                        objectlist[i].ChildNodes[1].InnerText,
+                        objectlist[i].ChildNodes[0].InnerText
+                        );
+                    objList.Add(objs);
+                }
+
+                for (int i = 0; i < relationList.Count; i++)
+                {
+                    Relations rels = new Relations(
+                        relationList[i].ChildNodes[0].InnerText,
+                        relationList[i].ChildNodes[1].InnerText,
+                        relationList[i].Name
+                        );
+                    relList.Add(rels);
+                }
             }
             catch (Exception)
             {
@@ -62,14 +88,8 @@ namespace EvonitTest
 
         public static void GetPath(int x = 0, int y = 6)// fix numbers for test
         {
-            //path finding algorithm
-            for (int i = 0; i < oList.Count; i++)
-            {
-                for (int j = 0; j < oList.Count; j++)
-                {
+            //recursion
 
-                }
-            }
         }
     }
 }

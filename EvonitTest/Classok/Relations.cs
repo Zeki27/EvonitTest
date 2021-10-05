@@ -11,5 +11,12 @@ namespace EvonitTest.Classok
         public string Honnan { get; set; }
         public string Hova { get; set; }
         public string Tipus { get; set; }
+
+        public Relations(string honnan, string hova,string tipus)
+        {
+            Honnan = honnan;
+            Hova = hova;
+            Tipus = tipus;
+        }
     }
 }
