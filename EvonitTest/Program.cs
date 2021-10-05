@@ -117,7 +117,7 @@ namespace EvonitTest
                 }
                 else
                 {
-                    GettPath(int.Parse(item), plist);
+                    GetPath(int.Parse(item), plist);
                 }
             }
         }
