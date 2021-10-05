@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -14,15 +15,20 @@ namespace EvonitTest
         public static int oCount = 0;
         public static XmlDocument doc;
 
+        public static int examinegoal = 0;
+
 
         public static List<Objects> objList = new List<Objects>();
         public static List<Relations> relList = new List<Relations>();
 
         static void Main(string[] args)
         {
+            Console.WriteLine("");
             ReadXML();
-            //CreateAdjecencyMatrix();
-            GetPath();
+            Console.WriteLine("Adja meg, hogy HOVA:");
+            examinegoal = int.Parse(Console.ReadLine());
+            Console.WriteLine("Adja meg, hogy HONNAN:");
+            GetPath(int.Parse(Console.ReadLine()));
             Console.ReadKey();
         }
 
@@ -63,6 +69,7 @@ namespace EvonitTest
             }
         }
 
+        [Obsolete]
         public static void CreateAdjecencyMatrix()
         {
             try
@@ -85,24 +92,34 @@ namespace EvonitTest
                 throw;
             }
         }
+        static int index = 0;
 
-        public static void GetPath(int x = 0, int y = 6)// fix numbers for test
+        public static void GetPath(int a, List<int> pl = null)
         {
-            //recursion
+            List<int> plist = new List<int>();
+            if (pl == null)
+            {
+                plist.Add(a);
+            }
+            else
+            {
+                plist = pl;
+                plist.Add(a);
+            }
 
+            var childs = relList.Where(x => int.Parse(x.Honnan) == a).Select(x => x.Hova).ToList();
+            foreach (var item in childs)
+            {
+                if (int.Parse(item) == examinegoal)
+                {
+                    plist.Add(int.Parse(item));
+                    plist.ForEach(x => Console.WriteLine($"{++index}. lépés {x}"));
+                }
+                else
+                {
+                    GettPath(int.Parse(item), plist);
+                }
+            }
         }
     }
 }
-
-//   0 1 2 3 4 5 6 7 8 9
-//
-//0  0 0 0 0 0 0 0 0 0 0
-//1  1 0 0 0 0 0 0 0 0 0
-//2  0 1 0 0 0 0 0 0 0 0
-//3  0 1 0 0 0 0 0 0 0 0 
-//4  0 0 0 0 0 0 1 0 0 0
-//5  0 0 0 0 1 0 0 0 0 0
-//6  0 0 0 1 0 0 0 0 0 0
-//7  0 0 0 0 0 0 0 0 0 1
-//8  0 0 0 0 0 1 0 0 0 0
-//9  0 0 0 0 1 0 0 0 0 0
