@@ -10,6 +10,7 @@ namespace EvonitTest
 {
     class Program
     {
+        public static int index = 0;
         public static XmlNodeList oList;
         public static int[,] oNM;
         public static int oCount = 0;
@@ -92,7 +93,6 @@ namespace EvonitTest
                 throw;
             }
         }
-        static int index = 0;
 
         public static void GetPath(int a, List<int> pl = null)
         {
