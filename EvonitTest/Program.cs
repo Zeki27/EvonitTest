@@ -24,11 +24,10 @@ namespace EvonitTest
 
         static void Main(string[] args)
         {
-            Console.WriteLine("");
             ReadXML();
-            Console.WriteLine("Adja meg, hogy HOVA:");
+            Console.WriteLine("Adja meg, hogy HOVA(0-19):");
             examinegoal = int.Parse(Console.ReadLine());
-            Console.WriteLine("Adja meg, hogy HONNAN:");
+            Console.WriteLine("Adja meg, hogy HONNAN(0-19):");
             GetPath(int.Parse(Console.ReadLine()));
             Console.ReadKey();
         }
@@ -70,30 +69,6 @@ namespace EvonitTest
             }
         }
 
-        [Obsolete]
-        public static void CreateAdjecencyMatrix()
-        {
-            try
-            {
-                //size
-                oList = doc.GetElementsByTagName("név");
-                oNM = new int[oList.Count, oList.Count];
-
-                //relations
-                XmlNodeList rList = doc.GetElementsByTagName("illeszkedik");
-                for (int i = 0; i < rList.Count; i++)
-                {
-                    Console.WriteLine("honnan " + rList[i].ChildNodes.Item(0).InnerText + "   hova " + rList[i].ChildNodes.Item(1).InnerText);
-                    oNM[int.Parse(rList[i].ChildNodes.Item(0).InnerText), int.Parse(rList[i].ChildNodes.Item(1).InnerText)] = 1;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         public static void GetPath(int a, List<int> pl = null)
         {
             List<int> plist = new List<int>();
@@ -119,6 +94,32 @@ namespace EvonitTest
                 {
                     GetPath(int.Parse(item), plist);
                 }
+            }
+        }
+
+
+
+        [Obsolete]//nem használt
+        public static void CreateAdjecencyMatrix()//szomszédsági mátrix
+        {
+            try
+            {
+                //size
+                oList = doc.GetElementsByTagName("név");
+                oNM = new int[oList.Count, oList.Count];
+
+                //relations
+                XmlNodeList rList = doc.GetElementsByTagName("illeszkedik");
+                for (int i = 0; i < rList.Count; i++)
+                {
+                    Console.WriteLine("honnan " + rList[i].ChildNodes.Item(0).InnerText + "   hova " + rList[i].ChildNodes.Item(1).InnerText);
+                    oNM[int.Parse(rList[i].ChildNodes.Item(0).InnerText), int.Parse(rList[i].ChildNodes.Item(1).InnerText)] = 1;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
